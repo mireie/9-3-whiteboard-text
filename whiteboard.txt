@@ -1,0 +1,48 @@
+// 9-3 Whiteboarding - Compressing Strings
+
+// input > String (alphabetical, case does matter)
+// output > String
+// example: aaa => 3a, a => a (not 1a)
+
+function strCompress(string) {
+	let output = ""
+  let i = 0
+  let counter = 1
+	while (i < string.length) {
+  	if (i === string.length - 1) {
+      output += string[i]
+      break
+  	}
+  	if (string[i] === string[i + counter]) {
+    	counter++
+    } else {
+      if (counter > 1) {
+        output += counter + string[i]
+      } else {
+        output += string[i]
+      }
+      i += counter
+      counter = 1
+    }
+  }
+  return output 
+}
+
+// With Recursion!
+
+function recursiveStrCompress(string, index = 0, result = ' ', counter = 1) {
+  if (index >= string.length) {
+    return result
+  }
+  if (string[index] != string[index + 1]) {
+    if (counter === 1) {
+      result += string[index]
+    } else {
+      result += counter + string[index]
+    }
+    return recursiveStrCompress(string, ++index, result, 1)
+  } else {
+    ++counter
+    return recursiveStrCompress(string, ++index, result, counter)
+  }
+}
